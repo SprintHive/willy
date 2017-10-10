@@ -9,6 +9,7 @@ process.on('exit', () => console.log(chalk.whiteBright('Goodbye and have a nice 
 
 require('./module/clusters')({willy, utils});
 require('./module/pods')({willy, utils});
+require('./module/rabbit')({willy, utils});
 
 console.log(chalk.red(`
  __      __       .__  .__                                  __           __      __.__.__  .__

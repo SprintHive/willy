@@ -13,7 +13,9 @@
     "willy": "./index.js"
   },
   "dependencies": {
+    "amqplib": "^0.5.1",
     "chalk": "^2.1.0",
+    "rxjs": "^5.4.3",
     "shelljs": "^0.7.8",
     "vorpal": "^1.12.0"
   }

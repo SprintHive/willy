@@ -18,6 +18,27 @@ const pods = [{
   command: 'connectToKong',
   description: 'Creates a kubctl port forward to kong.'
 },{
+  podPrefix: 'mondb-mongodb-0',
+  fromPort: '27027',
+  toPort: '27017',
+  namespace: 'dev',
+  command: 'connectToMongodbPollen',
+  description: 'Creates a kubctl port forward to mongodb in the dev namespace'
+},{
+  podPrefix: 'preprod-mongodb-0',
+  fromPort: '27037',
+  toPort: '27017',
+  namespace: 'pre-prod',
+  command: 'connectToMongodbNectar',
+  description: 'Creates a kubctl port forward to mongodb in the pre-prod namespace'
+},{
+  podPrefix: 'es-client',
+  fromPort: '9500',
+  toPort: '9200',
+  namespace: 'infra',
+  command: 'connectToElasticsearch',
+  description: 'Creates a kubctl port forward to elasticsearch (dev and pre-prod)'
+},{
   podPrefix: 'hello-node',
   fromPort: '7090',
   toPort: '8080',
@@ -32,14 +53,14 @@ module.exports = function init({willy, utils}) {
   async function getPod({namespace, podPrefix}) {
     namespace = namespace ? ` -n ${namespace}` : ' --all-namespaces';
     const cmd = `kubectl get po ${namespace} -o jsonpath='{.items..metadata.name}' | tr ' ' '\\n' | 
-  grep ${podPrefix} | head -n 1`
+  grep ${podPrefix} | head -n 1`;
     const { out } = await execCmdNoNewLines(cmd);
-    return {pod: out}
+    return {pod: out};
   }
 
   async function listPods({namespace}) {
     namespace = namespace ? ` -n ${namespace}` : ' --all-namespaces';
-    const cmd = `kubectl get po ${namespace}`
+    const cmd = `kubectl get po ${namespace}`;
     const { out } = await execCmdWithNewLines(cmd);
     return {pods: out}
   }
