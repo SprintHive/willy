@@ -22,15 +22,22 @@ const pods = [{
   fromPort: '27027',
   toPort: '27017',
   namespace: 'dev',
-  command: 'connectToMongodbPollen',
+  command: 'connectToMongodbDev',
   description: 'Creates a kubctl port forward to mongodb in the dev namespace'
 },{
   podPrefix: 'preprod-mongodb-0',
   fromPort: '27037',
   toPort: '27017',
   namespace: 'pre-prod',
-  command: 'connectToMongodbNectar',
+  command: 'connectToMongodbPreProd',
   description: 'Creates a kubctl port forward to mongodb in the pre-prod namespace'
+},{
+  podPrefix: 'mongodb-mongodb-0',
+  fromPort: '27047',
+  toPort: '27017',
+  namespace: 'prod',
+  command: 'connectToMongodbProd',
+  description: 'Creates a kubctl port forward to mongodb in the production namespace'
 },{
   podPrefix: 'es-client',
   fromPort: '9500',

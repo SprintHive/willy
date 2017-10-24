@@ -13,8 +13,12 @@ const clusters = [{
   description: 'Change to the Google play pen cluster'
 },{
   name: 'dev.wesbank.ekyc.co.za',
-  command: 'changeClusterToWesbank',
-  description: 'Change to the Wesbank cluster'
+  command: 'changeClusterToWesbankDevPreProd',
+  description: 'Change to the Wesbank dev and pre-pod cluster'
+},{
+  name: 'prod.wesbank.ekyc.co.za',
+  command: 'changeClusterToWesbankProd',
+  description: 'Change to the Wesbank prod cluster'
 },{
   name: 'minikube',
   command: 'changeClusterToMinikube',
@@ -38,7 +42,7 @@ module.exports = function init({willy, utils}) {
 
   clusters.forEach(({name, command, description}) => {
     willy
-      .command(command, description)
+      .command(command, `${description} (kubectl config use-context ${name})`)
       .action(async function (args, callback) {
         await connectToCluster(name);
         let {cluster} = await whichCluster();
@@ -57,7 +61,7 @@ module.exports = function init({willy, utils}) {
     });
 
   willy
-    .command('whichCluster', 'Check what cluster kubectl is connected to.')
+    .command('whichCluster', 'Check what cluster kubectl is connected to. (kubectl config current-context)')
     .action(async function (args, callback) {
       const {cluster} = await whichCluster();
       console.log(`You are currently connected to the ${chalk.blue(cluster)} cluster`);
